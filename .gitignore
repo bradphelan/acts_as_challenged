@@ -40,10 +40,15 @@ pkg
 #.\#*
 
 # For vim:
-#*.swp
+*.sw*
+.*.sw*
+*.log
 
 # For redcar:
 #.redcar
 
 # For rubinius:
 #*.rbc
+
+
+

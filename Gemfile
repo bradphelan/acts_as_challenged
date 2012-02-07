@@ -1,4 +1,9 @@
 source "http://rubygems.org"
+
+gem 'activerecord'
+gem 'acts_as_api'
+gem 'squeel'
+
 # Add dependencies required to use your gem here.
 # Example:
 #   gem "activesupport", ">= 2.3.5"
@@ -10,5 +15,8 @@ group :development do
   gem "rdoc", "~> 3.12"
   gem "bundler", "~> 1.0.0"
   gem "jeweler", "~> 1.8.3"
-  gem "rcov", ">= 0"
+  gem "sqlite3"
+  gem "factory_girl"
+  gem "forgery"
+  #gem "rcov", ">= 0"
 end

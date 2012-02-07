@@ -253,10 +253,18 @@ module ActsAsChallenged
       end
     end
 
-    def self.challenge_classes
+    protected
+
+    def self.all_challenge_classes
       challenge_class_names.map do |name|
         name.constantize
       end.reject(&:disabled?)
+    end
+
+    public
+
+    def self.challenge_classes
+      all_challenge_classes.reject{|k| k < ActsAsChallenged::ImplicitChallenge }
     end
 
     # This is a security feature so injected challenge names cannot
@@ -360,6 +368,7 @@ module ActsAsChallenged
         false
       end
     end
+
     def increment_cursor
       self.cursor += 1
       build_child_challenge

@@ -24,8 +24,8 @@ module ActsAsChallenged
       begins_on
     end
 
-    def self.challenge_folder
-      "challenges/implicit"
+    def self.challenge_classes
+      all_challenge_classes.select{|k| k < ActsAsChallenged::ImplicitChallenge }
     end
 
     # You can never lose an implict challenge

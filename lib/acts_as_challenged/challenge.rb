@@ -190,12 +190,6 @@ module ActsAsChallenged
       user.challenges.where{id!=my{id}}.where{type==my{self.class.name}}.order("ends_on DESC")
     end
 
-    # Return all logs that may be of interest that
-    # were made during the challenge's active period
-    def logs
-      user.logs.in_challenge_period(self)
-    end
-
     # Returns challenges that have no parent. It does
     # not return child challenges as we will wish to
     # traverse the challenge tree from the root down

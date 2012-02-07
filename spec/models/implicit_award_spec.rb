@@ -77,8 +77,8 @@ describe ActsAsChallenged::ImplicitChallenge do
 
 end
 
-class ImplicitToBeRemoved < ActsAsChallenged::ImplicitChallenge ; category :blood; end
-class ImplicitNotToBeRemoved < ActsAsChallenged::ImplicitChallenge ; category :blood; end
+class ImplicitToBeRemoved < ActsAsChallenged::ImplicitChallenge ; end
+class ImplicitNotToBeRemoved < ActsAsChallenged::ImplicitChallenge ; end
 
 describe "disabling an implicit challenge class so that users cannot accept them" do
   before :each do

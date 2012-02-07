@@ -21,14 +21,12 @@ require 'spec_helper'
 
 ActsAsChallenged::Challenge.challenge_folder = File.dirname(__FILE__) + '/challenges'
 
-class A < ActsAsChallenged::Challenge ; category :blood; end
-class B < ActsAsChallenged::Challenge ; category :blood; end
-class C < ActsAsChallenged::Challenge ; category :blood; end
-class D < ActsAsChallenged::Challenge ; category :blood; end
+class A < ActsAsChallenged::Challenge ; end
+class B < ActsAsChallenged::Challenge ; end
+class C < ActsAsChallenged::Challenge ; end
+class D < ActsAsChallenged::Challenge ; end
 
 class SimpleChallenge < ActsAsChallenged::Challenge
-
-  category :blood
 
   def duration
     6.weeks
@@ -54,15 +52,12 @@ end
 
 
 class SimpleChallenge2 < SimpleChallenge
-  category :grub
 end
 
 class SimpleChallenge3 < SimpleChallenge
-  category :blood
 end
 
 class ToLoseChallenge < SimpleChallenge
-  category :blood
   def won?
     false
   end
@@ -72,8 +67,6 @@ class ToLoseChallenge < SimpleChallenge
 end
 
 class ComplexChallenge < ActsAsChallenged::Challenge
-
-  category :blood
   def duration
     100.years
   end
@@ -92,7 +85,6 @@ class ComplexChallenge < ActsAsChallenged::Challenge
 end
 
 class OutOfDateChallenge < ActsAsChallenged::Challenge
-  category :blood
   def calc_begins_on
     Time.zone.now.ago(3.weeks)
   end
@@ -104,8 +96,6 @@ end
 
 
 class QuestTest0 < ActsAsChallenged::Quest
-
-  category :blood
 
   def workflow
     [SimpleChallenge,  SimpleChallenge2, SimpleChallenge3]
@@ -122,18 +112,6 @@ describe "with stopped time" do
     Time.stop
   end
 
-
-  describe "challenges in challenge folder" do
-    ActsAsChallenged::Challenge.challenge_class_names.map do |klass_name| 
-      describe "#{klass_name}" do
-        it "should have a category set" do
-          klass_name.constantize.category.should_not be_nil
-        end
-      end
-    end
-  end
-
-
   describe "challenges with locked_out_til attribute set" do
     before :each do
       ActsAsChallenged::Challenge.stub(:challenge_class_names).and_return %w[A B C D]     
@@ -148,7 +126,6 @@ describe "with stopped time" do
           t.should have_key "name"       
           t.should have_key "description"
           t.should have_key "available"  
-          t.should have_key "category"   
           t.should have_key "locked_till"
         end
       end
@@ -236,24 +213,6 @@ describe "with stopped time" do
       }.should raise_error(ActsAsChallenged::Challenge::ForbiddenException)
 
     end
-  end
-
-  describe "Challenge::category :category" do
-    it "should set the category of the subclass" do
-      SimpleChallenge.category.should == :blood
-      SimpleChallenge2.category.should == :grub
-    end
-
-    it "should not accept invalid categories" do
-
-      proc{
-        class ChallengeWithBadCategory < SimpleChallenge
-          category :krak
-        end
-      }.should raise_error
-      
-    end
-
   end
 
   describe "Creating challenges" do
@@ -552,7 +511,7 @@ describe "with stopped time" do
   #issue 17397853
   describe "removing a challenge class that is referenced in the database" do
     before :each do
-      class ToBeRemoved < ActsAsChallenged::Challenge ; category :blood; end
+      class ToBeRemoved < ActsAsChallenged::Challenge ; end
       @user = Factory :user
       Factory.create :challenge, :user => @user, :type => "ToBeRemoved", :status => "won"
     end
@@ -567,8 +526,8 @@ describe "with stopped time" do
 
   describe "disabling a challenge class so that users cannot accept them" do
     before do
-      class ToBeRemoved < ActsAsChallenged::Challenge ; category :blood; end
-      class NotToBeRemoved < ActsAsChallenged::Challenge ; category :blood; end
+      class ToBeRemoved < ActsAsChallenged::Challenge ; end
+      class NotToBeRemoved < ActsAsChallenged::Challenge ; end
       ActsAsChallenged::Challenge.stub(:challenge_class_names).and_return %w[ToBeRemoved NotToBeRemoved]     
       @user = Factory :user
     end

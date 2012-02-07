@@ -32,7 +32,6 @@ module ActsAsChallenged
           "name"        => klass.challenge_name,
           "description" => klass.description,
           "available"   => User.is_challenge_type_available?(loaw, acaw, klass.to_s),
-          "category"    => klass.category_i18n,
           "locked_till" => locked_out_challenge_time(klass.to_s)
         }
       end

@@ -30,13 +30,6 @@ module ActsAsChallenged
     ]
     acts_as_api
 
-    def self.category c=nil
-      raise "#{c} is not a valid category" if c and not Categories.include? c.to_s
-      @category = c if c
-      raise "category is nil" unless @category
-      @category
-    end
-
     # Call this method to disable a class from
     # being available to users.
     #
@@ -54,10 +47,6 @@ module ActsAsChallenged
     def self.duration d=nil
       @duration = d if d
       @duration || 24.hours
-    end
-
-    def self.category_i18n
-      I18n.t category.to_sym, :scope => [:challenges, :categories]
     end
 
     api_accessible :show do |t|

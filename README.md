@@ -8,6 +8,10 @@ easily to your ActiveRecord models.
 In your gemfile
 
     gem 'acts_as_challenged'
+    
+Generate models
+
+    rails generate acts_as_challenged
 
 In your :user model
 
